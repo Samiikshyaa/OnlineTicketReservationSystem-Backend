@@ -32,7 +32,7 @@ public class UserController {
     @PostMapping("/register")
     public ResponseEntity<?> signup(@RequestBody UserDto user) {
         User newUser = new User();
-        newUser.setUsername(user.getUsername());
+        newUser.setUserName(user.getUserName());
         newUser.setPassword(user.getPassword());
 
         userService.saveUser(newUser);
@@ -43,8 +43,8 @@ public class UserController {
     public ResponseEntity<String> login(@RequestBody User user){
         try {
             authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
-            UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUsername());
+                    new UsernamePasswordAuthenticationToken(user.getUserName(), user.getPassword()));
+            UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUserName());
             String jwt =  jwtUtil.generateToken(userDetails.getUsername());
             return new ResponseEntity<>(jwt, HttpStatus.OK);
         } catch(Exception e) {

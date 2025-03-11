@@ -18,7 +18,7 @@ public class UserServiceImpl implements UserService{
     @Override
     public boolean saveUser(User user) {
         try {
-            user.setUsername(user.getUsername());
+            user.setUserName(user.getUserName());
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             user.setRoles(Arrays.asList("USER"));
             userRepository.save(user);
