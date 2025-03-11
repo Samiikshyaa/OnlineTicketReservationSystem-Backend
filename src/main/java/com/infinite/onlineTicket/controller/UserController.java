@@ -2,7 +2,7 @@ package com.infinite.onlineTicket.controller;
 
 import com.infinite.onlineTicket.dto.UserDto;
 import com.infinite.onlineTicket.model.enums.Role;
-import com.infinite.onlineTicket.service.UserService;
+import com.infinite.onlineTicket.service.user.UserService;
 import com.infinite.onlineTicket.model.User;
 import com.infinite.onlineTicket.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
