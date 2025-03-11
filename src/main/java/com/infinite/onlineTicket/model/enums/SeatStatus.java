@@ -1,6 +1,6 @@
 package com.infinite.onlineTicket.model.enums;
 
-public enum SeatStaus {
+public enum SeatStatus {
     RESERVED,
     AVAILABLE
 }
