@@ -1,8 +1,9 @@
 package com.infinite.onlineTicket.controller;
 
 import com.infinite.onlineTicket.dto.UserDto;
+import com.infinite.onlineTicket.model.enums.Role;
 import com.infinite.onlineTicket.service.UserService;
-import com.infinite.onlineTicket.entities.User;
+import com.infinite.onlineTicket.model.User;
 import com.infinite.onlineTicket.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,7 +35,7 @@ public class UserController {
         User newUser = new User();
         newUser.setUserName(user.getUserName());
         newUser.setPassword(user.getPassword());
-
+        newUser.setRole(user.getRole().equalsIgnoreCase("admin")? Role.ADMIN:Role.PASSENGER);
         userService.saveUser(newUser);
         return new ResponseEntity<>("Created", HttpStatus.OK);
     }

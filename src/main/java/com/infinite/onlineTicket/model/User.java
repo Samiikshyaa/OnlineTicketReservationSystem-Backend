@@ -1,5 +1,6 @@
-package com.infinite.onlineTicket.entities;
+package com.infinite.onlineTicket.model;
 
+import com.infinite.onlineTicket.model.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,6 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
+
 @Entity
 @Table(name="users")
 public class User {
@@ -19,12 +21,12 @@ public class User {
     @Column(name="user_id")
     private Long userId;
 
-    @Column(name ="user_name")
+    @Column(name ="user_name", unique = true)
     private String userName;
 
     @Column(name ="password")
     private String password;
 
-    @Column(name ="roles")
-    private List<String> roles;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 }

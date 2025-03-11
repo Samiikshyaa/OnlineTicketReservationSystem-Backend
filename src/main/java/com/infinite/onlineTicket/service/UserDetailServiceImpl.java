@@ -1,6 +1,6 @@
 package com.infinite.onlineTicket.service;
 
-import com.infinite.onlineTicket.entities.User;
+import com.infinite.onlineTicket.model.User;
 import com.infinite.onlineTicket.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,7 +20,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
             return org.springframework.security.core.userdetails.User.builder().
                     username(user.getUserName())
                     .password(user.getPassword())
-                    .roles(user.getRoles().toArray(new String[0]))
+                    .roles(String.valueOf(user.getRole()))
                     .build();
         }
         throw new UsernameNotFoundException("user not found with username: " + username);

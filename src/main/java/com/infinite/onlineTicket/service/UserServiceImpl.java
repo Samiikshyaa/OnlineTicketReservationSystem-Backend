@@ -1,6 +1,7 @@
 package com.infinite.onlineTicket.service;
 
-import com.infinite.onlineTicket.entities.User;
+import com.infinite.onlineTicket.model.User;
+import com.infinite.onlineTicket.model.enums.Role;
 import com.infinite.onlineTicket.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -20,7 +21,7 @@ public class UserServiceImpl implements UserService{
         try {
             user.setUserName(user.getUserName());
             user.setPassword(passwordEncoder.encode(user.getPassword()));
-            user.setRoles(Arrays.asList("USER"));
+            user.setRole(user.getRole());
             userRepository.save(user);
             return true;
         }catch (Exception ex) {
