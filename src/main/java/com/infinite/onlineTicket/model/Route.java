@@ -24,5 +24,4 @@ public class Route implements Serializable {
     private LocalTime departureTime;
 
     private Double distance;
-
 }
