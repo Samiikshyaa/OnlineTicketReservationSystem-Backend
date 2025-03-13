@@ -44,7 +44,7 @@ public class SecurityConfig {
                     httpSecurityCorsConfigurer.configurationSource(source);})
                 .authorizeHttpRequests((req) ->
                 req
-                        .requestMatchers("/register","/login").permitAll()
+                        .requestMatchers("/register","/login", "/auth/**").permitAll()
                         .requestMatchers("/api/routes/save").hasRole("ADMIN")
                         .requestMatchers("/api/routes/list").hasAnyRole("ADMIN", "PASSENGER")
                         .anyRequest().authenticated());
