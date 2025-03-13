@@ -2,9 +2,17 @@ package com.infinite.onlineTicket.model;
 
 import com.infinite.onlineTicket.model.enums.SeatStatus;
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+
+@Data
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 
 @Entity
 @Table(name = "reservations")

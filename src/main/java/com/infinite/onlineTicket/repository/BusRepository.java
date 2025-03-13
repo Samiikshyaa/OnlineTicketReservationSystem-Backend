@@ -1,8 +1,9 @@
 package com.infinite.onlineTicket.repository;
 
+import com.infinite.onlineTicket.model.Bus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface Route extends JpaRepository<Route, Long> {
+public interface BusRepository extends JpaRepository<Bus, Long> {
 }
