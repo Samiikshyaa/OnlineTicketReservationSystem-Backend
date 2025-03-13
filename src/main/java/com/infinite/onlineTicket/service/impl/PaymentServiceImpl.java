@@ -1,10 +1,6 @@
-package com.infinite.onlineTicket.service.user.impl;
+package com.infinite.onlineTicket.service.impl;
 
-import com.infinite.onlineTicket.dto.PaymentDto;
-import com.infinite.onlineTicket.model.Payment;
-import com.infinite.onlineTicket.service.user.PaymentService;
-
-import java.util.List;
+import com.infinite.onlineTicket.service.PaymentService;
 
 public class PaymentServiceImpl implements PaymentService {
 //    @Override

@@ -1,11 +1,18 @@
 package com.infinite.onlineTicket.model;
 
 import jakarta.persistence.*;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 
 @Entity
 @Table(name = "routes")
@@ -15,13 +22,12 @@ public class Route implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "routes_seq_generator")
     private Long id;
 
-    private String from;
+    private String source;
 
-    private String to;
+    private String destination;
 
     @Column(name = "departure_time")
-    @DateTimeFormat(pattern = "HH:mm")
-    private LocalTime departureTime;
+    private String departureTime;
 
     private Double distance;
 }

@@ -1,21 +1,8 @@
-package com.infinite.onlineTicket.service.user.impl;
+package com.infinite.onlineTicket.service.impl;
 
-import com.infinite.onlineTicket.dto.ReservationDto;
-import com.infinite.onlineTicket.model.Bus;
-import com.infinite.onlineTicket.model.Reservation;
-import com.infinite.onlineTicket.model.Route;
-import com.infinite.onlineTicket.model.User;
-import com.infinite.onlineTicket.model.enums.SeatStatus;
-import com.infinite.onlineTicket.repository.BusRepository;
-import com.infinite.onlineTicket.repository.ReservationRepository;
-import com.infinite.onlineTicket.repository.RouteRepository;
-import com.infinite.onlineTicket.repository.UserRepository;
-import com.infinite.onlineTicket.service.user.ReservationService;
+import com.infinite.onlineTicket.service.ReservationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
