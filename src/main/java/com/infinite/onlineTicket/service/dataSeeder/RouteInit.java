@@ -9,6 +9,8 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -22,18 +24,19 @@ public class RouteInit  {
     public void seedRoutes() {
         if (routeRepository.count() == 0) {
             List<Route> routes = List.of(
-                    new Route(null, "Kathmandu", "Pokhara", "7:00 AM", 200.0),
-                    new Route(null, "Kathmandu", "Chitwan", "6:30 AM", 160.0),
-                    new Route(null, "Kathmandu", "Biratnagar", "8:00 AM", 380.0),
-                    new Route(null, "Pokhara", "Butwal", "9:30 AM", 120.0),
-                    new Route(null, "Birgunj", "Kathmandu", "10:00 AM", 280.0),
-                    new Route(null, "Dhangadhi", "Nepalgunj", "5:45 AM", 200.0),
-                    new Route(null, "Kathmandu", "Dharan", "7:15 AM", 390.0),
-                    new Route(null, "Biratnagar", "Janakpur", "6:00 AM", 220.0),
-                    new Route(null, "Pokhara", "Lumbini", "7:45 AM", 190.0)
+                    new Route(null, "Kathmandu", "Pokhara", LocalDate.parse("2025-04-30"), LocalTime.parse("07:00"), 200.0),
+                    new Route(null, "Kathmandu", "Chitwan", LocalDate.parse("2025-05-01"), LocalTime.parse("06:30"), 160.0),
+                    new Route(null, "Kathmandu", "Biratnagar", LocalDate.parse("2025-05-02"), LocalTime.parse("08:00"), 380.0),
+                    new Route(null, "Pokhara", "Butwal", LocalDate.parse("2025-05-03"), LocalTime.parse("09:30"), 120.0),
+                    new Route(null, "Birgunj", "Kathmandu", LocalDate.parse("2025-05-04"), LocalTime.parse("10:00"), 280.0),
+                    new Route(null, "Dhangadhi", "Nepalgunj", LocalDate.parse("2025-05-05"), LocalTime.parse("05:45"), 200.0),
+                    new Route(null, "Kathmandu", "Dharan", LocalDate.parse("2025-05-06"), LocalTime.parse("07:15"), 390.0),
+                    new Route(null, "Biratnagar", "Janakpur", LocalDate.parse("2025-05-07"), LocalTime.parse("06:00"), 220.0),
+                    new Route(null, "Pokhara", "Lumbini", LocalDate.parse("2025-05-08"), LocalTime.parse("07:45"), 190.0)
             );
+
             routeRepository.saveAll(routes);
-            System.out.println("Nepali routes seeded successfully!");
+            System.out.println("✅ Routes with correct date & time format seeded successfully!");
         }
     }
 }

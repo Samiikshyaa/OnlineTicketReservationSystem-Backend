@@ -1,10 +1,12 @@
 package com.infinite.onlineTicket.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
@@ -18,16 +20,20 @@ import java.time.LocalTime;
 @Table(name = "routes")
 public class Route implements Serializable {
     @Id
-    @SequenceGenerator(name ="routes_seq_generator", sequenceName = "routes_seq_generator", allocationSize = 1)
+    @SequenceGenerator(name = "routes_seq_generator", sequenceName = "routes_seq_generator", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "routes_seq_generator")
     private Long id;
 
     private String source;
-
     private String destination;
 
-    @Column(name = "departure_time")
-    private String departureTime;
+    @Column(name = "departure_date", nullable = false, columnDefinition = "DATE")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")  // ✅ Ensures "2025-04-30" format
+    private LocalDate departureDate;
+
+    @Column(name = "departure_time", nullable = false, columnDefinition = "TIME")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")  // ✅ Ensures "09:45" format
+    private LocalTime departureTime;
 
     private Double distance;
 }
