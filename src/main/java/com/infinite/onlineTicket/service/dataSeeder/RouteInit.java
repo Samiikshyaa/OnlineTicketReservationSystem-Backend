@@ -4,9 +4,6 @@ import com.infinite.onlineTicket.model.Route;
 import com.infinite.onlineTicket.repository.RouteRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.event.ContextRefreshedEvent;
-import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -15,7 +12,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Component
-public class RouteInit  {
+public class RouteInit {
 //    implements CommandLineRunner -> this is run before hibernate creates table
 
     private final RouteRepository routeRepository;
@@ -36,7 +33,7 @@ public class RouteInit  {
             );
 
             routeRepository.saveAll(routes);
-            System.out.println("✅ Routes with correct date & time format seeded successfully!");
+            System.out.println("Routes seeded successfully!");
         }
     }
 }
