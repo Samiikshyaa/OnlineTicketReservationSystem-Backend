@@ -17,16 +17,15 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class RouterServiceImpl implements RouteService {
     private final RouteRepository routeRepository;
+
     @Override
     public Route saveOrUpdate(RouteDto routeDto) {
-        Optional<Route> optionalRoute = routeRepository.findBySourceAndDestination(
-                routeDto.getSource(), routeDto.getDestination());
+        Optional<Route> optionalRoute = routeRepository.findBySourceAndDestination(routeDto.getSource(), routeDto.getDestination());
 
         Route route;
 
         if (routeDto.getId() != null) {
-            route = routeRepository.findById(routeDto.getId())
-                    .orElseThrow(() -> new EntityNotFoundException("Route with ID " + routeDto.getId() + " not found"));
+            route = routeRepository.findById(routeDto.getId()).orElseThrow(() -> new EntityNotFoundException("Route with ID " + routeDto.getId() + " not found"));
         } else {
             route = new Route(); // Create new entity if ID is null (new route)
         }
@@ -44,6 +43,11 @@ public class RouterServiceImpl implements RouteService {
     @Override
     public List<Route> getAllRoutes() {
         return routeRepository.findAll();
+    }
+
+    @Override
+    public void deleteRoute(Long routeId) {
+        routeRepository.deleteById(routeId);
     }
 
 }
