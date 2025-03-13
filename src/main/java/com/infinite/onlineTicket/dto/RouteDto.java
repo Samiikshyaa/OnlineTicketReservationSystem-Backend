@@ -10,6 +10,7 @@ import lombok.*;
 @Builder
 
 public class RouteDto {
+    private Long id;
     private String source;
     private String destination;
     private String departureDate;
