@@ -43,7 +43,11 @@ public class SecurityConfig {
                     source.registerCorsConfiguration("/**", configuration);
                     httpSecurityCorsConfigurer.configurationSource(source);})
                 .authorizeHttpRequests((req) ->
-                req.requestMatchers("/register","/login").permitAll().anyRequest().authenticated());
+                req
+                        .requestMatchers("/register","/login").permitAll()
+                        .requestMatchers("/api/routes/save").hasRole("ADMIN")
+                        .requestMatchers("/api/routes/list").hasAnyRole("ADMIN", "PASSENGER")
+                        .anyRequest().authenticated());
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }

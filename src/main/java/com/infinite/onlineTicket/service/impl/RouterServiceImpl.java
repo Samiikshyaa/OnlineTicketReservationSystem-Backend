@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -18,23 +19,33 @@ public class RouterServiceImpl implements RouteService {
     private final RouteRepository routeRepository;
     @Override
     public Route saveOrUpdate(RouteDto routeDto) {
-        Optional<Route> optionalRoute = routeRepository.findBySourceAndDestination(routeDto.getSource(),
-                routeDto.getDestination());
+        Optional<Route> optionalRoute = routeRepository.findBySourceAndDestination(
+                routeDto.getSource(), routeDto.getDestination());
 
-        Long id = routeDto.getId();
-        if(id!=null && optionalRoute.isEmpty()) {
-            throw new EntityNotFoundException("Route with ID " + routeDto.getId() + " not found");
-        }
-         return routeRepository.save(Route.builder()
-                            .id(id)
-                            .source(routeDto.getSource())
-                            .destination(routeDto.getDestination())
-                            .departureDate(LocalDate.parse(routeDto.getDepartureDate()))
-                            .departureTime(LocalTime.parse(routeDto.getDepartureTime()))
-                            .distance(routeDto.getDistance())
-                    .build());
+        Route route;
 
+        if (routeDto.getId() != null) {
+            route = routeRepository.findById(routeDto.getId())
+                    .orElseThrow(() -> new EntityNotFoundException("Route with ID " + routeDto.getId() + " not found"));
+        } else {
+            route = new Route(); // Create new entity if ID is null (new route)
         }
+
+        // Update fields
+        route.setSource(routeDto.getSource());
+        route.setDestination(routeDto.getDestination());
+        route.setDepartureDate(LocalDate.parse(routeDto.getDepartureDate()));
+        route.setDepartureTime(LocalTime.parse(routeDto.getDepartureTime()));
+        route.setDistance(routeDto.getDistance());
+
+        return routeRepository.save(route);
+    }
+
+    @Override
+    public List<Route> getAllRoutes() {
+        return routeRepository.findAll();
+    }
+
 }
 
 

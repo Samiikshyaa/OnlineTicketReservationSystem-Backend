@@ -4,8 +4,7 @@ import com.infinite.onlineTicket.dto.GlobalApiResponse;
 
 public class BaseController {
     public GlobalApiResponse successResponse(String message, Object data) {
-        return GlobalApiResponse
-                .builder()
+        return GlobalApiResponse.builder()
                 .status(true)
                 .message(message)
                 .data(data)
