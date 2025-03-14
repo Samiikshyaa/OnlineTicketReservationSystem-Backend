@@ -43,8 +43,8 @@ public class Reservation implements Serializable {
             foreignKey = @ForeignKey(name = "fk_reservation_bus"))
     private Bus bus;
 
-    @ManyToOne(targetEntity = Route.class, fetch = FetchType.LAZY)
-    @JoinColumn(name = "route_id", referencedColumnName = "id",
-            foreignKey = @ForeignKey(name = "fk_reservation_route"))
-    private Route route;
+//    @ManyToOne(targetEntity = Route.class, fetch = FetchType.LAZY)
+//    @JoinColumn(name = "route_id", referencedColumnName = "id",
+//            foreignKey = @ForeignKey(name = "fk_reservation_route"))
+//    private Route route;
 }
