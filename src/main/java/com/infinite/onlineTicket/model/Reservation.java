@@ -6,6 +6,7 @@ import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Getter
@@ -23,15 +24,9 @@ public class Reservation implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "reservations_seq_generator")
     private Long id;
 
-    @Column(name = "seat_number")
-    private String seatNumber;
 
     @Column(name = "reservation_date")
     private LocalDateTime reservationDate;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "seat_status")
-    private SeatStatus seatStatus;
 
     @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "user_id",
@@ -43,8 +38,6 @@ public class Reservation implements Serializable {
             foreignKey = @ForeignKey(name = "fk_reservation_bus"))
     private Bus bus;
 
-//    @ManyToOne(targetEntity = Route.class, fetch = FetchType.LAZY)
-//    @JoinColumn(name = "route_id", referencedColumnName = "id",
-//            foreignKey = @ForeignKey(name = "fk_reservation_route"))
-//    private Route route;
+    @OneToMany(targetEntity = Seat.class, fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
+    private List<Seat> seats;
 }

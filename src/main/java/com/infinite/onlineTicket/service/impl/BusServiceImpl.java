@@ -3,8 +3,11 @@ package com.infinite.onlineTicket.service.impl;
 import com.infinite.onlineTicket.dto.BusDto;
 import com.infinite.onlineTicket.model.Bus;
 import com.infinite.onlineTicket.model.Route;
+import com.infinite.onlineTicket.model.Seat;
+import com.infinite.onlineTicket.model.enums.SeatStatus;
 import com.infinite.onlineTicket.repository.BusRepository;
 import com.infinite.onlineTicket.repository.RouteRepository;
+import com.infinite.onlineTicket.repository.SeatRepository;
 import com.infinite.onlineTicket.service.BusService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,21 +29,21 @@ import java.util.Optional;
 public class BusServiceImpl implements BusService {
     private final BusRepository busRepository;
     private final RouteRepository routeRepository;
+    private final SeatRepository seatRepository;
     @Override
     public BusDto saveOrUpdate(BusDto busDto) {
         Bus bus;
-        Route route;
-        Optional<Route> optionalRoute = routeRepository.findById(busDto.getRouteId());
-        if (busDto.getId() != null && optionalRoute.isPresent()) {
-            bus = busRepository.findById(busDto.getId()).orElseThrow(() -> new EntityNotFoundException("Bus with ID " + busDto.getId() + " not found"));
-            route = routeRepository.findById(busDto.getRouteId()).orElseThrow(() -> new EntityNotFoundException("Route with ID " + busDto.getRouteId() + " not found"));
-        } else {
-            bus = new Bus(); // Create new entity if ID is null (new route)
-        }
 
+        Route route = routeRepository.findById(busDto.getRouteId()).orElseThrow(() -> new EntityNotFoundException("Route with ID " + busDto.getRouteId() + " not found"));
+
+        if (busDto.getId() != null && route!=null) {
+            bus = busRepository.findById(busDto.getId()).orElseThrow(() -> new EntityNotFoundException("Bus with ID " + busDto.getId() + " not found"));
+        } else {
+            bus = new Bus();
+        }
         bus.setBusNumber(busDto.getBusNumber());
         bus.setCapacity(busDto.getCapacity());
-        bus.setRoutes(List.of(optionalRoute.get()));
+        bus.setRoutes(List.of(route));
         Long id = busRepository.save(bus).getId();
         busDto.setId(id);
         return busDto;
@@ -54,4 +58,5 @@ public class BusServiceImpl implements BusService {
     public void deleteBus(Long routeId) {
 
     }
+
 }

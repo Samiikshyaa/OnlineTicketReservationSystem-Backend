@@ -28,11 +28,11 @@ public class Route implements Serializable {
     private String destination;
 
     @Column(name = "departure_date", nullable = false, columnDefinition = "DATE")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")  // ✅ Ensures "2025-04-30" format
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate departureDate;
 
     @Column(name = "departure_time", nullable = false, columnDefinition = "TIME")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")  // ✅ Ensures "09:45" format
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
     private LocalTime departureTime;
 
     private Double distance;

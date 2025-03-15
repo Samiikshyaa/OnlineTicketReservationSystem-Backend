@@ -2,11 +2,10 @@ package com.infinite.onlineTicket.controller;
 
 import com.infinite.onlineTicket.dto.BusDto;
 import com.infinite.onlineTicket.dto.GlobalApiResponse;
-import com.infinite.onlineTicket.dto.RouteDto;
 import com.infinite.onlineTicket.model.Bus;
-import com.infinite.onlineTicket.model.Route;
 import com.infinite.onlineTicket.repository.BusRepository;
 import com.infinite.onlineTicket.service.BusService;
+import com.infinite.onlineTicket.service.SeatService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -27,12 +26,14 @@ import java.util.Optional;
 public class BusController extends BaseController {
     private final BusService busService;
     private final BusRepository busRepository;
+    private final SeatService seatService;
 
     @PostMapping("/save")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<GlobalApiResponse> saveOrUpdate(@RequestBody BusDto busDto) {
         try {
             BusDto bus = busService.saveOrUpdate(busDto);
+            seatService.seatCreate(busDto.getId());
             return new ResponseEntity<>(successResponse("Bus saved successfully", bus), HttpStatus.OK);
         } catch (EntityNotFoundException e) {
             return new ResponseEntity<>(failureResponse("Bus update failed" ,e.getMessage()), HttpStatus.NOT_FOUND);
