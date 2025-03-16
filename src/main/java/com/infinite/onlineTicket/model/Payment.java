@@ -22,6 +22,10 @@ public class Payment implements Serializable {
             allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "payment_seq_generator")
     private Long id;
+    @Column(name = "total_amount")
+    private Double totalAmount;
+    @Column(name = "transaction_id", unique = true)
+    private String transactionId;
     @Column(name = "payment_date")
     private LocalDateTime paymentDate;
     @Column(name = "payment_method")
@@ -31,4 +35,5 @@ public class Payment implements Serializable {
     @JoinColumn(name = "reservation_id", referencedColumnName = "id",
             foreignKey = @ForeignKey(name = "fk_payment_reservation_id"))
     private Reservation reservation;
+
 }

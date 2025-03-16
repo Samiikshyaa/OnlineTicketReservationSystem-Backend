@@ -1,8 +1,11 @@
 package com.infinite.onlineTicket.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.infinite.onlineTicket.model.enums.SeatStatus;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.io.Serializable;
 
 @Getter
 @Setter
@@ -12,7 +15,7 @@ import lombok.*;
 
 @Entity
 @Table(name = "seats")
-public class Seat {
+public class Seat implements Serializable {
     @Id
     @SequenceGenerator(name = "seats_seq_generator", sequenceName = "seats_seq_generator", allocationSize = 1)
     @GeneratedValue(strategy= GenerationType.SEQUENCE, generator = "seats_seq_generator")
@@ -28,5 +31,6 @@ public class Seat {
     @ManyToOne(targetEntity = Bus.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "bus_id", referencedColumnName = "id",
             foreignKey = @ForeignKey(name = "fk_seat_bus"))
+    @JsonIgnore
     private Bus bus;
 }

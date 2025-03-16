@@ -2,6 +2,8 @@ package com.infinite.onlineTicket.dto;
 
 import lombok.*;
 
+import java.util.List;
+
 @Data
 @Getter
 @Setter
@@ -9,8 +11,6 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ReservationDto {
-    private Long userId;
     private Long busId;
-    private Long routeId;
-    private String seatNumber;
+    private List<Long> seatNumbers;
 }

@@ -35,5 +35,7 @@ public class Route implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
     private LocalTime departureTime;
 
+    private Double price;
+
     private Double distance;
 }

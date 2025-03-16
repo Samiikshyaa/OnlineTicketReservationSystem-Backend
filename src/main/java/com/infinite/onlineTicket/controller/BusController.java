@@ -33,9 +33,7 @@ public class BusController extends BaseController {
     public ResponseEntity<GlobalApiResponse> saveOrUpdate(@RequestBody BusDto busDto) {
         try {
             BusDto bus = busService.saveOrUpdate(busDto);
-            if (!busRepository.findById(bus.getId()).isPresent()) {
                 seatService.seatCreate(busDto.getId());
-            }
             return new ResponseEntity<>(successResponse("Bus saved successfully", bus), HttpStatus.OK);
         } catch (EntityNotFoundException e) {
             return new ResponseEntity<>(failureResponse("Bus update failed", e.getMessage()), HttpStatus.NOT_FOUND);

@@ -1,5 +1,6 @@
 package com.infinite.onlineTicket.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -32,4 +33,7 @@ public class Bus implements Serializable {
             inverseJoinColumns = @JoinColumn(name= "route_id", referencedColumnName = "id",
                     foreignKey = @ForeignKey(name = "fk_buses_route_id")))
     private List<Route> routes;
+    @OneToMany(mappedBy = "bus", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<Seat> seats;
 }

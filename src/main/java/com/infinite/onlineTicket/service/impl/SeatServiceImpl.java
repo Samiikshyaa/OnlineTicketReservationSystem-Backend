@@ -8,6 +8,7 @@ import com.infinite.onlineTicket.repository.BusRepository;
 import com.infinite.onlineTicket.repository.SeatRepository;
 import com.infinite.onlineTicket.service.SeatService;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,7 @@ public class SeatServiceImpl implements SeatService {
     private final BusRepository busRepository;
 
 
+    @Transactional
     @Override
     public void seatCreate(Long busId) {
         Seat seat;
