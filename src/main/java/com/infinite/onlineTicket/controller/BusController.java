@@ -33,12 +33,14 @@ public class BusController extends BaseController {
     public ResponseEntity<GlobalApiResponse> saveOrUpdate(@RequestBody BusDto busDto) {
         try {
             BusDto bus = busService.saveOrUpdate(busDto);
-            seatService.seatCreate(busDto.getId());
+            if (!busRepository.findById(bus.getId()).isPresent()) {
+                seatService.seatCreate(busDto.getId());
+            }
             return new ResponseEntity<>(successResponse("Bus saved successfully", bus), HttpStatus.OK);
         } catch (EntityNotFoundException e) {
-            return new ResponseEntity<>(failureResponse("Bus update failed" ,e.getMessage()), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(failureResponse("Bus update failed", e.getMessage()), HttpStatus.NOT_FOUND);
         } catch (Exception e) {
-            return new ResponseEntity<>(failureResponse("An error occurred while saving the bus ",e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(failureResponse("An error occurred while saving the bus ", e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -48,23 +50,23 @@ public class BusController extends BaseController {
         try {
             List<Bus> buses = busService.getAll();
             return new ResponseEntity<>(successResponse("Bus retrieved successfully", buses), HttpStatus.OK);
-        }catch (EntityNotFoundException e) {
-            return new ResponseEntity<>(failureResponse("Bus retrive failed" ,e.getMessage()), HttpStatus.NOT_FOUND);
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity<>(failureResponse("Bus retrive failed", e.getMessage()), HttpStatus.NOT_FOUND);
         } catch (Exception e) {
-            return new ResponseEntity<>(failureResponse("An error occurred while fetching the bus ",e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(failureResponse("An error occurred while fetching the bus ", e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
 
     @DeleteMapping("/delete/{bus-id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<GlobalApiResponse> delete (@PathVariable("bus-id") Long id){
+    public ResponseEntity<GlobalApiResponse> delete(@PathVariable("bus-id") Long id) {
         busService.deleteBus(id);
         Optional<Bus> flag = busRepository.findById(id);
-        if (flag.isEmpty()){
-            return new ResponseEntity<>(successResponse("Bus deleted successfully",id),HttpStatus.OK);
+        if (flag.isEmpty()) {
+            return new ResponseEntity<>(successResponse("Bus deleted successfully", id), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(failureResponse("Bus still exists",id),HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(failureResponse("Bus still exists", id), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

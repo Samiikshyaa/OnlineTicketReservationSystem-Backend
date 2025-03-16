@@ -1,6 +1,7 @@
 package com.infinite.onlineTicket.service.impl;
 
 import com.infinite.onlineTicket.dto.RouteDto;
+import com.infinite.onlineTicket.model.Bus;
 import com.infinite.onlineTicket.model.Route;
 import com.infinite.onlineTicket.repository.RouteRepository;
 import com.infinite.onlineTicket.service.RouteService;
@@ -48,6 +49,12 @@ public class RouterServiceImpl implements RouteService {
     @Override
     public void deleteRoute(Long routeId) {
         routeRepository.deleteById(routeId);
+    }
+
+    @Override
+    public Bus getBusDetails(Long routeId) {
+         Bus bus =  routeRepository.findBusByRouteId(routeId).orElseThrow(() -> new EntityNotFoundException("Bus in route with ID " + routeId + " not found"));
+         return bus;
     }
 
 }
