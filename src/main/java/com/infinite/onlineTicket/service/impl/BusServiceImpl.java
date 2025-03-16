@@ -50,13 +50,13 @@ public class BusServiceImpl implements BusService {
     }
 
     @Override
-    public List<BusDto> getAll() {
-        return List.of();
+    public List<Bus> getAll() {
+        return busRepository.findAll();
     }
 
     @Override
-    public void deleteBus(Long routeId) {
-
+    public void deleteBus(Long busId) {
+        busRepository.deleteById(busId);
     }
 
 }

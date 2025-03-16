@@ -13,6 +13,6 @@ import java.util.List;
  **/
 public interface BusService {
     BusDto saveOrUpdate(BusDto busDto);
-    List<BusDto> getAll();
-    void deleteBus(Long routeId);
+    List<Bus> getAll();
+    void deleteBus(Long busId);
 }

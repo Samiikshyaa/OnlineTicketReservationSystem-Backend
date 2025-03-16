@@ -46,8 +46,8 @@ public class BusController extends BaseController {
     @PreAuthorize("hasAnyRole('ADMIN', 'PASSENGER')")
     public ResponseEntity<GlobalApiResponse> getAll() {
         try {
-            List<BusDto> routes = busService.getAll();
-            return new ResponseEntity<>(successResponse("Bus retrieved successfully", routes), HttpStatus.OK);
+            List<Bus> buses = busService.getAll();
+            return new ResponseEntity<>(successResponse("Bus retrieved successfully", buses), HttpStatus.OK);
         }catch (EntityNotFoundException e) {
             return new ResponseEntity<>(failureResponse("Bus retrive failed" ,e.getMessage()), HttpStatus.NOT_FOUND);
         } catch (Exception e) {
