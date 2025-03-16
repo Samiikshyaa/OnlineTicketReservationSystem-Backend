@@ -1,5 +1,6 @@
 package com.infinite.onlineTicket.controller;
 
+import com.infinite.onlineTicket.dto.GlobalApiResponse;
 import com.infinite.onlineTicket.dto.UserDto;
 import com.infinite.onlineTicket.model.enums.Role;
 import com.infinite.onlineTicket.service.user.UserService;
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin
 @RestController
-public class UserController {
+public class UserController extends BaseController {
     @Autowired
     private JwtUtil jwtUtil;
 
@@ -33,13 +34,13 @@ public class UserController {
     private UserDetailsService userDetailsService;
 
     @PostMapping("/register")
-    public ResponseEntity<?> signup(@RequestBody UserDto user) {
+    public ResponseEntity<GlobalApiResponse> signup(@RequestBody UserDto user) {
         User newUser = new User();
         newUser.setUserName(user.getUserName());
         newUser.setPassword(user.getPassword());
         newUser.setRole(user.getRole().equalsIgnoreCase("admin")? Role.ADMIN:Role.PASSENGER);
         userService.saveUser(newUser);
-        return new ResponseEntity<>("Created", HttpStatus.OK);
+        return new ResponseEntity<>(successResponse("User registered successfully",newUser.getUserName()),HttpStatus.OK);
     }
 
     @PostMapping("/login")
