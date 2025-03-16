@@ -24,7 +24,6 @@ public class Reservation implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "reservations_seq_generator")
     private Long id;
 
-
     @Column(name = "reservation_date")
     private LocalDateTime reservationDate;
 
