@@ -13,8 +13,9 @@ public class JwtUtil {
     private String SECRET_KEY = "7dc60cc463f14ea8921dc8c49202f6879cd834ee05c283a45f4f2a5a88e9a199";
     private final Set<String> blacklistedTokens = new HashSet<>();
 
-    public String generateToken(String username) {
+    public String generateToken(String username, String role) {
         Map<String, Object> claims = new HashMap<>();
+        claims.put("role", role);
         return createToken(claims, username);
     }
 

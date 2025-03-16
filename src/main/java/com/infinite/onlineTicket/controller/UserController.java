@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -49,7 +50,11 @@ public class UserController extends BaseController {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(user.getUserName(), user.getPassword()));
             UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUserName());
-            String jwt =  jwtUtil.generateToken(userDetails.getUsername());
+            String role = userDetails.getAuthorities().stream()
+                    .map(GrantedAuthority::getAuthority)  // Get the role from the authorities
+                    .findFirst()
+                    .orElse("PASSENGER");
+            String jwt =  jwtUtil.generateToken(userDetails.getUsername(), role);
             return new ResponseEntity<>(jwt, HttpStatus.OK);
         } catch(Exception e) {
             return new ResponseEntity<>("Incorrect username and password", HttpStatus.BAD_REQUEST);
