@@ -5,6 +5,7 @@ import com.infinite.onlineTicket.model.Route;
 import com.infinite.onlineTicket.projection.RouteProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.xml.transform.Source;
@@ -25,16 +26,19 @@ public interface RouteRepository extends JpaRepository<Route, Long> {
     @Query(value = "select destination from routes where source = ?1", nativeQuery = true)
     List<String> findDestinationsBySource(String source);
 
-    @Query(value = "SELECT b.bus_number AS busNumber, " +
-            "       b.capacity AS capacity, " +
-            "       r.price AS price, " +
-            "       r.distance AS distance " +
-            "FROM buses b " +
-            "JOIN bus_route br ON b.id = br.bus_id " +
-            "JOIN routes r ON r.id = br.route_id " +
-            "WHERE r.source = ?1 AND r.destination = ?2",
+    @Query(value = "SELECT b.id AS busId, " +
+            " b.bus_number AS busNumber,\n" +
+            " b.capacity AS capacity,\n" +
+            " r.distance as distance,\n" +
+            " r.price as price,\n" +
+            " r.\"source\",\n" +
+            " r.destination\n" +
+            " FROM buses b \n" +
+            " JOIN bus_route br ON b.id = br.bus_id\n" +
+            " join routes r on r.id = br.route_id where r.\"source\" = :source\n" +
+            " and r.destination = :destination\n",
             nativeQuery = true)
-    List<RouteProjection> findDetails(String source, String destination);
+    List<RouteProjection> findDetails(@Param("source") String source, @Param("destination") String destination);
 
 
 
