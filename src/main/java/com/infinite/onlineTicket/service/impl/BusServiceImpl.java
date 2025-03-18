@@ -5,6 +5,7 @@ import com.infinite.onlineTicket.model.Bus;
 import com.infinite.onlineTicket.model.Route;
 import com.infinite.onlineTicket.model.Seat;
 import com.infinite.onlineTicket.model.enums.SeatStatus;
+import com.infinite.onlineTicket.projection.SeatProjection;
 import com.infinite.onlineTicket.repository.BusRepository;
 import com.infinite.onlineTicket.repository.RouteRepository;
 import com.infinite.onlineTicket.repository.SeatRepository;
@@ -57,6 +58,11 @@ public class BusServiceImpl implements BusService {
     @Override
     public void deleteBus(Long busId) {
         busRepository.deleteById(busId);
+    }
+
+    @Override
+    public List<SeatProjection> seatList(Long busId) {
+        return seatRepository.busSeats(busId);
     }
 
 }

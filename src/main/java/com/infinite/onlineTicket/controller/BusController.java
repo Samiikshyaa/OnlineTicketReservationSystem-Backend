@@ -3,7 +3,10 @@ package com.infinite.onlineTicket.controller;
 import com.infinite.onlineTicket.dto.BusDto;
 import com.infinite.onlineTicket.dto.GlobalApiResponse;
 import com.infinite.onlineTicket.model.Bus;
+import com.infinite.onlineTicket.model.Seat;
+import com.infinite.onlineTicket.projection.SeatProjection;
 import com.infinite.onlineTicket.repository.BusRepository;
+import com.infinite.onlineTicket.repository.SeatRepository;
 import com.infinite.onlineTicket.service.BusService;
 import com.infinite.onlineTicket.service.SeatService;
 import jakarta.persistence.EntityNotFoundException;
@@ -28,12 +31,13 @@ public class BusController extends BaseController {
     private final BusRepository busRepository;
     private final SeatService seatService;
 
+
     @PostMapping("/save")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<GlobalApiResponse> saveOrUpdate(@RequestBody BusDto busDto) {
         try {
             BusDto bus = busService.saveOrUpdate(busDto);
-                seatService.seatCreate(busDto.getId());
+            seatService.seatCreate(busDto.getId());
             return new ResponseEntity<>(successResponse("Bus saved successfully", bus), HttpStatus.OK);
         } catch (EntityNotFoundException e) {
             return new ResponseEntity<>(failureResponse("Bus update failed", e.getMessage()), HttpStatus.NOT_FOUND);
@@ -65,6 +69,19 @@ public class BusController extends BaseController {
             return new ResponseEntity<>(successResponse("Bus deleted successfully", id), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(failureResponse("Bus still exists", id), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/seats/{busId}")
+    @PreAuthorize("hasRole('PASSENGER')")
+    public ResponseEntity<GlobalApiResponse> getBusSeats(@PathVariable("busId") Long id) {
+        try {
+            List<SeatProjection> seats = busService.seatList(id);
+            return new ResponseEntity<>(successResponse("Seats retrived successfully", seats), HttpStatus.OK);
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity<>(failureResponse("Seats retrive failed", e.getMessage()), HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>(failureResponse("An error occurred while retriving the seats ", e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
