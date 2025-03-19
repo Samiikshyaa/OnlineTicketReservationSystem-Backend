@@ -10,8 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PaymentDto {
-    private Double totalAmount;
     private String transactionId;
-    private PaymentMethod paymentMethod;
+    private String paymentMethod;
     private Long reservationId;
 }
