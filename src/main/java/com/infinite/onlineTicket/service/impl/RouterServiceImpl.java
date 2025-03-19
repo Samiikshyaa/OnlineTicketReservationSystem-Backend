@@ -38,6 +38,7 @@ public class RouterServiceImpl implements RouteService {
         route.setDepartureDate(LocalDate.parse(routeDto.getDepartureDate()));
         route.setDepartureTime(LocalTime.parse(routeDto.getDepartureTime()));
         route.setDistance(routeDto.getDistance());
+        route.setPrice(routeDto.getPrice());
 
         return routeRepository.save(route);
     }

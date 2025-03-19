@@ -16,4 +16,5 @@ public class RouteDto {
     private String departureDate;
     private String departureTime;
     private Double distance;
+    private Double price;
 }
