@@ -9,6 +9,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.xml.transform.Source;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,9 +38,11 @@ public interface RouteRepository extends JpaRepository<Route, Long> {
             " FROM buses b \n" +
             " JOIN bus_route br ON b.id = br.bus_id\n" +
             " join routes r on r.id = br.route_id where r.\"source\" = :source\n" +
-            " and r.destination = :destination\n",
+            " and r.destination = :destination\n" +
+            " and r.departure_date = :date and r.departure_time = :time ",
             nativeQuery = true)
-    List<RouteProjection> findDetails(@Param("source") String source, @Param("destination") String destination);
+    List<RouteProjection> findDetails(@Param("source") String source, @Param("destination") String destination,
+                                      @Param("date")LocalDate date, @Param("time")LocalTime time);
 
 
 

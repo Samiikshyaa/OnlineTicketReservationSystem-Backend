@@ -13,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -76,8 +78,8 @@ public class RouteController extends BaseController {
     }
 
     @GetMapping("/bus-route-details")
-    public ResponseEntity<GlobalApiResponse> routeBusDetails(@RequestParam String source, @RequestParam String destination){
-        List<RouteProjection> routes = routeService.getRouteProjections(source, destination);
+    public ResponseEntity<GlobalApiResponse> routeBusDetails(@RequestParam String source, @RequestParam String destination, @RequestParam LocalDate date, @RequestParam LocalTime time){
+        List<RouteProjection> routes = routeService.getRouteProjections(source, destination, date, time);
         return new ResponseEntity<>(successResponse("destination fetched successfully",routes ),HttpStatus.OK);
     }
 

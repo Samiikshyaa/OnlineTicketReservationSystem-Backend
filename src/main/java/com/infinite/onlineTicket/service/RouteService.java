@@ -5,6 +5,8 @@ import com.infinite.onlineTicket.model.Bus;
 import com.infinite.onlineTicket.model.Route;
 import com.infinite.onlineTicket.projection.RouteProjection;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 public interface RouteService {
@@ -14,5 +16,5 @@ public interface RouteService {
     Bus getBusDetails(Long routeId);
     List<String> getSource();
     List<String> getDestination(String sourceName);
-    List<RouteProjection> getRouteProjections(String sourceName, String destinationName);
+    List<RouteProjection> getRouteProjections(String sourceName, String destinationName, LocalDate date, LocalTime time);
 }

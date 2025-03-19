@@ -70,8 +70,8 @@ public class RouterServiceImpl implements RouteService {
     }
 
     @Override
-    public List<RouteProjection> getRouteProjections(String source, String destination) {
-        return routeRepository.findDetails(source, destination);
+    public List<RouteProjection> getRouteProjections(String source, String destination, LocalDate date, LocalTime time) {
+        return routeRepository.findDetails(source, destination, date, time);
     }
 
 }

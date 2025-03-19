@@ -48,4 +48,17 @@ public class PaymentController extends BaseController {
         }
 
     }
+
+    @GetMapping("/final-ticket/{id}")
+    @PreAuthorize("hasRole('PASSENGER')")
+    public ResponseEntity<GlobalApiResponse> fetchTicket(@PathVariable("id") Long ticketId) {
+        try {
+            PaymentResponseDto payment = paymentService.getTicket(ticketId);
+            return new ResponseEntity<>(successResponse("Payment successful", payment), HttpStatus.OK);
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity<>(failureResponse("Bus update failed", e.getMessage()), HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>(failureResponse("An error occurred while saving the bus ", e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

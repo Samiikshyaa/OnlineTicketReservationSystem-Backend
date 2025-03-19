@@ -58,6 +58,23 @@ public class PaymentServiceImpl implements PaymentService {
     public TicketProjection getTotalAmounts(Long reservationId) {
         return paymentRepository.getTicketDetails(reservationId);
     }
+
+    @Override
+    public PaymentResponseDto getTicket(Long paymentId) {
+        Payment payment = paymentRepository.findById(paymentId).orElseThrow(() -> new RuntimeException("Payment not found"));
+        Reservation reservation = payment.getReservation();
+        List<String> seatNumbers = reservation.getSeats().stream().map(x-> x.getSeatNumber()).toList();
+        PaymentResponseDto paymentResponseDto = PaymentResponseDto.builder()
+                .id(payment.getId())
+                .totalAmount(payment.getTotalAmount())
+                .transactionId(payment.getTransactionId())
+                .paymentMethod(payment.getPaymentMethod())
+                .paymentDateAndTime(payment.getPaymentDate())
+                .reservationId(reservation.getId())
+                .seatNumbers(seatNumbers)
+                .build();
+        return paymentResponseDto;
+    }
 //
 //    @Override
 //    public List<Payment> getAllPayments() {

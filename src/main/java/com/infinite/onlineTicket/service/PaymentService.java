@@ -8,5 +8,5 @@ import com.infinite.onlineTicket.projection.TicketProjection;
 public interface PaymentService {
     PaymentResponseDto makePayment(PaymentDto paymentDTO);
     TicketProjection getTotalAmounts(Long reservationId);
-//    List<Payment> getAllPayments();
+    PaymentResponseDto getTicket(Long paymentId);
 }
