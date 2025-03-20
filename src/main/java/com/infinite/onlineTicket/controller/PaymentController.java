@@ -3,6 +3,7 @@ package com.infinite.onlineTicket.controller;
 import com.infinite.onlineTicket.dto.GlobalApiResponse;
 import com.infinite.onlineTicket.dto.PaymentDto;
 import com.infinite.onlineTicket.dto.PaymentResponseDto;
+import com.infinite.onlineTicket.dto.TicketDto;
 import com.infinite.onlineTicket.model.Payment;
 import com.infinite.onlineTicket.projection.TicketProjection;
 import com.infinite.onlineTicket.service.PaymentService;
@@ -53,7 +54,7 @@ public class PaymentController extends BaseController {
     @PreAuthorize("hasRole('PASSENGER')")
     public ResponseEntity<GlobalApiResponse> fetchTicket(@PathVariable("id") Long ticketId) {
         try {
-            PaymentResponseDto payment = paymentService.getTicket(ticketId);
+            TicketDto payment = paymentService.getTicket(ticketId);
             return new ResponseEntity<>(successResponse("Payment successful", payment), HttpStatus.OK);
         } catch (EntityNotFoundException e) {
             return new ResponseEntity<>(failureResponse("Bus update failed", e.getMessage()), HttpStatus.NOT_FOUND);

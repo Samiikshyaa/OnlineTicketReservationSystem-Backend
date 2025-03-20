@@ -2,6 +2,7 @@ package com.infinite.onlineTicket.service.impl;
 
 import com.infinite.onlineTicket.dto.PaymentDto;
 import com.infinite.onlineTicket.dto.PaymentResponseDto;
+import com.infinite.onlineTicket.dto.TicketDto;
 import com.infinite.onlineTicket.model.Payment;
 import com.infinite.onlineTicket.model.Reservation;
 import com.infinite.onlineTicket.model.enums.PaymentMethod;
@@ -9,6 +10,7 @@ import com.infinite.onlineTicket.projection.TicketProjection;
 import com.infinite.onlineTicket.repository.PaymentRepository;
 import com.infinite.onlineTicket.repository.ReservationRepository;
 import com.infinite.onlineTicket.service.PaymentService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +26,7 @@ public class PaymentServiceImpl implements PaymentService {
     private final PaymentRepository paymentRepository;
 
     @Override
+    @Transactional
     public PaymentResponseDto makePayment(PaymentDto paymentDTO) {
             Reservation reservation = reservationRepository.findById(paymentDTO.getReservationId())
                     .orElseThrow(() -> new RuntimeException("Reservation not found"));
@@ -43,7 +46,7 @@ public class PaymentServiceImpl implements PaymentService {
 
             List<String> seatNumbers = reservation.getSeats().stream().map(x-> x.getSeatNumber()).toList();
             PaymentResponseDto paymentResponseDto = PaymentResponseDto.builder()
-                    .id(payment.getId())
+                    .paymentId(payment.getId())
                     .totalAmount(totalAmount)
                     .transactionId(paymentDTO.getTransactionId())
                     .paymentMethod(payment.getPaymentMethod())
@@ -60,24 +63,26 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public PaymentResponseDto getTicket(Long paymentId) {
+    public TicketDto getTicket(Long paymentId) {
         Payment payment = paymentRepository.findById(paymentId).orElseThrow(() -> new RuntimeException("Payment not found"));
         Reservation reservation = payment.getReservation();
         List<String> seatNumbers = reservation.getSeats().stream().map(x-> x.getSeatNumber()).toList();
-        PaymentResponseDto paymentResponseDto = PaymentResponseDto.builder()
-                .id(payment.getId())
+        TicketProjection ticketInformation = paymentRepository.getTicketDetails(reservation.getId());
+        TicketDto ticketDto = TicketDto.builder()
+                .paymentId(payment.getId())
                 .totalAmount(payment.getTotalAmount())
                 .transactionId(payment.getTransactionId())
                 .paymentMethod(payment.getPaymentMethod())
                 .paymentDateAndTime(payment.getPaymentDate())
                 .reservationId(reservation.getId())
                 .seatNumbers(seatNumbers)
+                .departureDate(ticketInformation.getDepartureDate())
+                .departureTime(ticketInformation.getDepartureTime())
+                .from(ticketInformation.getSource())
+                .to(ticketInformation.getDestination())
+                .userId(ticketInformation.getUserId())
+                .userName(ticketInformation.getUserName())
                 .build();
-        return paymentResponseDto;
+        return ticketDto;
     }
-//
-//    @Override
-//    public List<Payment> getAllPayments() {
-//        return List.of();
-//    }
 }

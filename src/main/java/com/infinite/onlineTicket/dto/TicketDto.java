@@ -1,19 +1,20 @@
 package com.infinite.onlineTicket.dto;
 
 import com.infinite.onlineTicket.model.enums.PaymentMethod;
-import com.infinite.onlineTicket.model.enums.SeatStatus;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @Getter
 @Setter
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 
-public class PaymentResponseDto {
+public class TicketDto {
     private Long paymentId;
     private Double totalAmount;
     private String transactionId;
@@ -21,5 +22,10 @@ public class PaymentResponseDto {
     private LocalDateTime paymentDateAndTime;
     private Long reservationId;
     private List<String> seatNumbers;
-
+    private LocalDate departureDate;
+    private LocalTime departureTime;
+    private String from;
+    private String to;
+    private Long userId;
+    private String userName;
 }

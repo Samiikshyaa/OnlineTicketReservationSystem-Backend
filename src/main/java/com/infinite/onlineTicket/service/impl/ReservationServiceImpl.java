@@ -6,6 +6,7 @@ import com.infinite.onlineTicket.model.enums.SeatStatus;
 import com.infinite.onlineTicket.repository.*;
 import com.infinite.onlineTicket.service.ReservationService;
 import com.infinite.onlineTicket.utils.SecurityUtils;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +27,7 @@ public class ReservationServiceImpl implements ReservationService {
     private final RouteRepository routeRepository;
     private final SeatRepository seatRepository;
 
+    @Transactional
     @Override
     public Reservation reserveSeat(ReservationDto reservationDTO) {
         String username = SecurityUtils.getLoggedInUsername();
