@@ -5,6 +5,7 @@ import com.infinite.onlineTicket.service.ReservationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,18 +24,21 @@ import java.util.Map;
 public class DashboardController extends BaseController {
     private ReservationService reservationService;
 
+//    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/daily")
     public ResponseEntity<GlobalApiResponse> getDailyReservations() {
         Map<String, Object> stats = reservationService.getDailyReservations();
         return new ResponseEntity<>(successResponse("Daily data retrived successfully", stats), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/weekly")
     public ResponseEntity<GlobalApiResponse> getWeeklyReservations() {
         Map<String, Object> stats = reservationService.getWeeklyReservations();
         return new ResponseEntity<>(successResponse("Weekly data retrived successfully", stats), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/monthly")
     public ResponseEntity<GlobalApiResponse> getMonthlyReservations() {
         Map<String, Object> stats = reservationService.getMonthlyReservations();
