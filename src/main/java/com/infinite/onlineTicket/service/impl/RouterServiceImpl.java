@@ -4,6 +4,7 @@ import com.infinite.onlineTicket.dto.RouteDto;
 import com.infinite.onlineTicket.model.Bus;
 import com.infinite.onlineTicket.model.Route;
 import com.infinite.onlineTicket.projection.RouteProjection;
+import com.infinite.onlineTicket.projection.dashboard.RouteBusProjection;
 import com.infinite.onlineTicket.repository.RouteRepository;
 import com.infinite.onlineTicket.service.RouteService;
 import jakarta.persistence.EntityNotFoundException;
@@ -55,8 +56,8 @@ public class RouterServiceImpl implements RouteService {
 
     @Override
     public Bus getBusDetails(Long routeId) {
-         Bus bus =  routeRepository.findBusByRouteId(routeId).orElseThrow(() -> new EntityNotFoundException("Bus in route with ID " + routeId + " not found"));
-         return bus;
+        Bus bus = routeRepository.findBusByRouteId(routeId).orElseThrow(() -> new EntityNotFoundException("Bus in route with ID " + routeId + " not found"));
+        return bus;
     }
 
     @Override
@@ -66,12 +67,17 @@ public class RouterServiceImpl implements RouteService {
 
     @Override
     public List<String> getDestination(String sourceName) {
-        return routeRepository.findDestinationsBySource( sourceName);
+        return routeRepository.findDestinationsBySource(sourceName);
     }
 
     @Override
     public List<RouteProjection> getRouteProjections(String source, String destination, LocalDate date, LocalTime time) {
         return routeRepository.findDetails(source, destination, date, time);
+    }
+
+    @Override
+    public List<RouteBusProjection> getRouteAndBusCount() {
+        return routeRepository.findBusCountByRoute();
     }
 
 }

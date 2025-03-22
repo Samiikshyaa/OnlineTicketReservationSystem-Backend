@@ -3,12 +3,12 @@ package com.infinite.onlineTicket.repository;
 import com.infinite.onlineTicket.model.Bus;
 import com.infinite.onlineTicket.model.Route;
 import com.infinite.onlineTicket.projection.RouteProjection;
+import com.infinite.onlineTicket.projection.dashboard.RouteBusProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import javax.xml.transform.Source;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -42,9 +42,15 @@ public interface RouteRepository extends JpaRepository<Route, Long> {
             " and r.departure_date = :date and r.departure_time = :time ",
             nativeQuery = true)
     List<RouteProjection> findDetails(@Param("source") String source, @Param("destination") String destination,
-                                      @Param("date")LocalDate date, @Param("time")LocalTime time);
+                                      @Param("date") LocalDate date, @Param("time") LocalTime time);
 
 
-
+    @Query(value = "select COUNT(bus_id) as busCount," +
+            "(r.source || '->' ||r.destination) as routeName\n" +
+            "FROM bus_route br " +
+            "JOIN routes r " +
+            "ON br.route_id = r.id " +
+            "GROUP by routeName;", nativeQuery = true)
+    List<RouteBusProjection> findBusCountByRoute();
 
 }
