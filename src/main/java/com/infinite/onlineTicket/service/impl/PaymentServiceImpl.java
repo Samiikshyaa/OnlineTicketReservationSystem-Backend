@@ -6,6 +6,7 @@ import com.infinite.onlineTicket.dto.TicketDto;
 import com.infinite.onlineTicket.model.Payment;
 import com.infinite.onlineTicket.model.Reservation;
 import com.infinite.onlineTicket.model.enums.PaymentMethod;
+import com.infinite.onlineTicket.projection.HistoryProjection;
 import com.infinite.onlineTicket.projection.TicketProjection;
 import com.infinite.onlineTicket.repository.PaymentRepository;
 import com.infinite.onlineTicket.repository.ReservationRepository;
@@ -16,7 +17,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -84,5 +84,12 @@ public class PaymentServiceImpl implements PaymentService {
                 .userName(ticketInformation.getUserName())
                 .build();
         return ticketDto;
+    }
+
+    @Override
+    public List<HistoryProjection> getHistory(String userName) {
+        List<HistoryProjection> historyDtos = paymentRepository.getPaymentHistory(userName);
+
+        return historyDtos;
     }
 }
