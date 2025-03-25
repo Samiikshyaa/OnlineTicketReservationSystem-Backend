@@ -23,6 +23,7 @@ import java.util.Optional;
  * author: Samikshya Timalsina
  * createdDate: 3/13/2025
  **/
+@CrossOrigin
 @RestController
 @RequestMapping("/api/bus")
 @RequiredArgsConstructor

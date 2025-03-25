@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
  * author: Samikshya Timalsina
  * createdDate: 3/19/2025
  **/
+@CrossOrigin
 @RestController
 @RequestMapping("/api/payment")
 @RequiredArgsConstructor
