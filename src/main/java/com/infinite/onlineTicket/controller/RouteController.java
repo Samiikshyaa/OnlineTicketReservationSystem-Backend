@@ -33,9 +33,9 @@ public class RouteController extends BaseController {
             Route route = routeService.saveOrUpdate(routeDto);
             return new ResponseEntity<>(successResponse("Route saved successfully", route), HttpStatus.OK);
         } catch (EntityNotFoundException e) {
-            return new ResponseEntity<>(failureResponse("Route update failed" ,e.getMessage()), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(failureResponse("Route update failed", e.getMessage()), HttpStatus.NOT_FOUND);
         } catch (Exception e) {
-            return new ResponseEntity<>(failureResponse("An error occurred while saving the route ",e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(failureResponse("An error occurred while saving the route ", e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -45,42 +45,42 @@ public class RouteController extends BaseController {
         try {
             List<Route> routes = routeService.getAllRoutes();
             return new ResponseEntity<>(successResponse("Routes retrieved successfully", routes), HttpStatus.OK);
-        }catch (EntityNotFoundException e) {
-            return new ResponseEntity<>(failureResponse("Route retrive failed" ,e.getMessage()), HttpStatus.NOT_FOUND);
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity<>(failureResponse("Route retrive failed", e.getMessage()), HttpStatus.NOT_FOUND);
         } catch (Exception e) {
-            return new ResponseEntity<>(failureResponse("An error occurred while fetching the route ",e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(failureResponse("An error occurred while fetching the route ", e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
 
     @DeleteMapping("/delete/{route-id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<GlobalApiResponse> deleteRoute(@PathVariable("route-id") Long id){
+    public ResponseEntity<GlobalApiResponse> deleteRoute(@PathVariable("route-id") Long id) {
         routeService.deleteRoute(id);
         Optional<Route> flag = routeRepository.findById(id);
-        if (flag.isEmpty()){
-            return new ResponseEntity<>(successResponse("Route deleted successfully",id),HttpStatus.OK);
+        if (flag.isEmpty()) {
+            return new ResponseEntity<>(successResponse("Route deleted successfully", id), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(failureResponse("Route still exists",id),HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(failureResponse("Route still exists", id), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @GetMapping("/sources")
-    public ResponseEntity<GlobalApiResponse> sourceList(){
+    public ResponseEntity<GlobalApiResponse> sourceList() {
         List<String> sources = routeService.getSource();
-        return new ResponseEntity<>(successResponse("source fetched successfully",sources ),HttpStatus.OK);
+        return new ResponseEntity<>(successResponse("Source fetched successfully", sources), HttpStatus.OK);
     }
 
     @GetMapping("/destinations")
-    public ResponseEntity<GlobalApiResponse> destinationList(@RequestParam String source){
+    public ResponseEntity<GlobalApiResponse> destinationList(@RequestParam String source) {
         List<String> sources = routeService.getDestination(source);
-        return new ResponseEntity<>(successResponse("destination fetched successfully",sources ),HttpStatus.OK);
+        return new ResponseEntity<>(successResponse("Destination fetched successfully", sources), HttpStatus.OK);
     }
 
     @GetMapping("/bus-route-details")
-    public ResponseEntity<GlobalApiResponse> routeBusDetails(@RequestParam String source, @RequestParam String destination, @RequestParam LocalDate date, @RequestParam LocalTime time){
+    public ResponseEntity<GlobalApiResponse> routeBusDetails(@RequestParam String source, @RequestParam String destination, @RequestParam LocalDate date, @RequestParam LocalTime time) {
         List<RouteProjection> routes = routeService.getRouteProjections(source, destination, date, time);
-        return new ResponseEntity<>(successResponse("destination fetched successfully",routes ),HttpStatus.OK);
+        return new ResponseEntity<>(successResponse("Destination fetched successfully", routes), HttpStatus.OK);
     }
 
 

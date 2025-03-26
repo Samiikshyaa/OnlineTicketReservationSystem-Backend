@@ -20,12 +20,12 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/reservations")
 public class ReservationController extends BaseController {
-
     private final ReservationService reservationService;
+
     @PostMapping("/reserve")
     @PreAuthorize("hasRole('PASSENGER')")
     public ResponseEntity<GlobalApiResponse> reserveSeats(@RequestBody ReservationDto request) {
-         Reservation reservation=reservationService.reserveSeat(request);
-        return new ResponseEntity<>(successResponse("Reservations successful",reservation), HttpStatus.OK);
+        Reservation reservation = reservationService.reserveSeat(request);
+        return new ResponseEntity<>(successResponse("Reservation successful", reservation), HttpStatus.OK);
     }
 }

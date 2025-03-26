@@ -1,14 +1,15 @@
-package com.infinite.onlineTicket.service.user;
+package com.infinite.onlineTicket.service.impl;
 
 import com.infinite.onlineTicket.model.User;
 import com.infinite.onlineTicket.repository.UserRepository;
+import com.infinite.onlineTicket.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 

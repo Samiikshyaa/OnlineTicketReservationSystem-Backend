@@ -3,8 +3,6 @@ package com.infinite.onlineTicket.service.impl;
 import com.infinite.onlineTicket.dto.BusDto;
 import com.infinite.onlineTicket.model.Bus;
 import com.infinite.onlineTicket.model.Route;
-import com.infinite.onlineTicket.model.Seat;
-import com.infinite.onlineTicket.model.enums.SeatStatus;
 import com.infinite.onlineTicket.projection.SeatProjection;
 import com.infinite.onlineTicket.repository.BusRepository;
 import com.infinite.onlineTicket.repository.RouteRepository;
@@ -14,11 +12,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * author: Samikshya Timalsina
@@ -31,14 +25,17 @@ public class BusServiceImpl implements BusService {
     private final BusRepository busRepository;
     private final RouteRepository routeRepository;
     private final SeatRepository seatRepository;
+
     @Override
     public BusDto saveOrUpdate(BusDto busDto) {
         Bus bus;
 
-        Route route = routeRepository.findById(busDto.getRouteId()).orElseThrow(() -> new EntityNotFoundException("Route with ID " + busDto.getRouteId() + " not found"));
+        Route route = routeRepository.findById(busDto.getRouteId()).
+                orElseThrow(() -> new EntityNotFoundException("Route with ID " + busDto.getRouteId() + " not found"));
 
-        if (busDto.getId() != null && route!=null) {
-            bus = busRepository.findById(busDto.getId()).orElseThrow(() -> new EntityNotFoundException("Bus with ID " + busDto.getId() + " not found"));
+        if (busDto.getId() != null && route != null) {
+            bus = busRepository.findById(busDto.getId()).
+                    orElseThrow(() -> new EntityNotFoundException("Bus with ID " + busDto.getId() + " not found"));
         } else {
             bus = new Bus();
         }

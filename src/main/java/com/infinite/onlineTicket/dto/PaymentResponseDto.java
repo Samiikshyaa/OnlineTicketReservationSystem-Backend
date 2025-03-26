@@ -1,7 +1,6 @@
 package com.infinite.onlineTicket.dto;
 
 import com.infinite.onlineTicket.model.enums.PaymentMethod;
-import com.infinite.onlineTicket.model.enums.SeatStatus;
 import lombok.*;
 
 import java.time.LocalDateTime;

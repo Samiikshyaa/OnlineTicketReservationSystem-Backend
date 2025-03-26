@@ -23,16 +23,20 @@ public class Bus implements Serializable {
             allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "buses_sequence_generator")
     private Long id;
+
     @Column(name = "bus_number")
     private String busNumber;
+
     private Integer capacity;
+
     @ManyToMany(targetEntity = Route.class, fetch = FetchType.LAZY)
-    @JoinTable(name ="bus_route",
-            joinColumns= @JoinColumn(name= "bus_id", referencedColumnName = "id",
+    @JoinTable(name = "bus_route",
+            joinColumns = @JoinColumn(name = "bus_id", referencedColumnName = "id",
                     foreignKey = @ForeignKey(name = "fk_buses_bus_id")),
-            inverseJoinColumns = @JoinColumn(name= "route_id", referencedColumnName = "id",
+            inverseJoinColumns = @JoinColumn(name = "route_id", referencedColumnName = "id",
                     foreignKey = @ForeignKey(name = "fk_buses_route_id")))
     private List<Route> routes;
+
     @OneToMany(mappedBy = "bus", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Seat> seats;

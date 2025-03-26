@@ -25,6 +25,7 @@ public class Route implements Serializable {
     private Long id;
 
     private String source;
+
     private String destination;
 
     @Column(name = "departure_date", nullable = false, columnDefinition = "DATE")

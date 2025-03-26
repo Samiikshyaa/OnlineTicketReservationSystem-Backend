@@ -4,7 +4,6 @@ import com.infinite.onlineTicket.dto.GlobalApiResponse;
 import com.infinite.onlineTicket.dto.PaymentDto;
 import com.infinite.onlineTicket.dto.PaymentResponseDto;
 import com.infinite.onlineTicket.dto.TicketDto;
-import com.infinite.onlineTicket.model.Payment;
 import com.infinite.onlineTicket.projection.TicketProjection;
 import com.infinite.onlineTicket.service.PaymentService;
 import jakarta.persistence.EntityNotFoundException;
@@ -30,11 +29,11 @@ public class PaymentController extends BaseController {
     public ResponseEntity<GlobalApiResponse> save(@RequestBody PaymentDto paymentDto) {
         try {
             PaymentResponseDto payment = paymentService.makePayment(paymentDto);
-            return new ResponseEntity<>(successResponse("Payment successful", payment), HttpStatus.OK);
+            return new ResponseEntity<>(successResponse("Payment saving successful", payment), HttpStatus.OK);
         } catch (EntityNotFoundException e) {
-            return new ResponseEntity<>(failureResponse("Bus update failed", e.getMessage()), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(failureResponse("Payment saving failed", e.getMessage()), HttpStatus.NOT_FOUND);
         } catch (Exception e) {
-            return new ResponseEntity<>(failureResponse("An error occurred while saving the bus ", e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(failureResponse("An error occurred while saving the payment ", e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -44,7 +43,7 @@ public class PaymentController extends BaseController {
     public ResponseEntity<GlobalApiResponse> getTicket(@PathVariable("id") Long reservationId) {
         try {
             TicketProjection ticketProjection = paymentService.getTotalAmounts(reservationId);
-            return new ResponseEntity<>(successResponse("Ticket fetch successfully", ticketProjection), HttpStatus.OK);
+            return new ResponseEntity<>(successResponse("Ticket information fetched successfully", ticketProjection), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(failureResponse("An exception occured", e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -56,11 +55,11 @@ public class PaymentController extends BaseController {
     public ResponseEntity<GlobalApiResponse> fetchTicket(@PathVariable("id") Long ticketId) {
         try {
             TicketDto payment = paymentService.getTicket(ticketId);
-            return new ResponseEntity<>(successResponse("Payment successful", payment), HttpStatus.OK);
+            return new ResponseEntity<>(successResponse("Ticket fetch successful", payment), HttpStatus.OK);
         } catch (EntityNotFoundException e) {
-            return new ResponseEntity<>(failureResponse("Bus update failed", e.getMessage()), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(failureResponse("Ticket fetch failed", e.getMessage()), HttpStatus.NOT_FOUND);
         } catch (Exception e) {
-            return new ResponseEntity<>(failureResponse("An error occurred while saving the bus ", e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(failureResponse("An error occurred while fetching the ticket ", e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

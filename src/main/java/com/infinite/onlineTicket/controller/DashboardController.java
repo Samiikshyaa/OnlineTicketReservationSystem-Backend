@@ -15,12 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * author: Samikshya Timalsina
  * createdDate: 3/16/2025
  **/
+
 @CrossOrigin
 @RestController
 @RequestMapping("/api/dashboard")
@@ -33,11 +33,11 @@ public class DashboardController extends BaseController {
     @GetMapping("/busCountByRoute")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<GlobalApiResponse> getBusCountByRoute() {
-        try{
-        List<RouteBusProjection> routeBusDto = routeService.getRouteAndBusCount();
-        return new ResponseEntity<>(successResponse("Data fetch successful", routeBusDto), HttpStatus.OK);
-        }catch (Exception e){
-            return  new ResponseEntity<>(failureResponse("Fetch Failed", e.getMessage()),HttpStatus.INTERNAL_SERVER_ERROR);
+        try {
+            List<RouteBusProjection> routeBusDto = routeService.getRouteAndBusCount();
+            return new ResponseEntity<>(successResponse("Bus count for each route fetched successfully", routeBusDto), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(failureResponse("Fetch Failed", e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

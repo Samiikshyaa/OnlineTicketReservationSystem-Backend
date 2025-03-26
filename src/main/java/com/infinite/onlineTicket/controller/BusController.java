@@ -3,10 +3,8 @@ package com.infinite.onlineTicket.controller;
 import com.infinite.onlineTicket.dto.BusDto;
 import com.infinite.onlineTicket.dto.GlobalApiResponse;
 import com.infinite.onlineTicket.model.Bus;
-import com.infinite.onlineTicket.model.Seat;
 import com.infinite.onlineTicket.projection.SeatProjection;
 import com.infinite.onlineTicket.repository.BusRepository;
-import com.infinite.onlineTicket.repository.SeatRepository;
 import com.infinite.onlineTicket.service.BusService;
 import com.infinite.onlineTicket.service.SeatService;
 import jakarta.persistence.EntityNotFoundException;
@@ -23,6 +21,7 @@ import java.util.Optional;
  * author: Samikshya Timalsina
  * createdDate: 3/13/2025
  **/
+
 @CrossOrigin
 @RestController
 @RequestMapping("/api/bus")

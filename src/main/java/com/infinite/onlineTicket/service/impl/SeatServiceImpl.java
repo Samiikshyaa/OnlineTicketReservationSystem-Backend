@@ -1,6 +1,5 @@
 package com.infinite.onlineTicket.service.impl;
 
-import com.infinite.onlineTicket.dto.SeatDto;
 import com.infinite.onlineTicket.model.Bus;
 import com.infinite.onlineTicket.model.Seat;
 import com.infinite.onlineTicket.model.enums.SeatStatus;
@@ -11,10 +10,6 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -28,12 +23,12 @@ public class SeatServiceImpl implements SeatService {
     public void seatCreate(Long busId) {
         Seat seat;
         Bus bus = busRepository.findById(busId)
-                .orElseThrow(()-> new EntityNotFoundException("Bus with Id"+busId+" not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Bus with Id" + busId + " not found"));
         Integer busCapacity = bus.getCapacity();
-        for (int i = 1; i <= busCapacity ; i++) {
+        for (int i = 1; i <= busCapacity; i++) {
             seat = Seat.builder()
                     .seatStatus(SeatStatus.AVAILABLE)
-                    .seatNumber("S"+i)
+                    .seatNumber("S" + i)
                     .bus(bus)
                     .build();
             seatRepository.save(seat);

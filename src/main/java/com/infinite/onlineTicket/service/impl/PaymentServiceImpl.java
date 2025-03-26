@@ -34,7 +34,6 @@ public class PaymentServiceImpl implements PaymentService {
             TicketProjection ticket = paymentRepository.getTicketDetails(paymentDTO.getReservationId());
             Double totalAmount = ticket.getTotalAmount();
 
-            // Create and Save Payment
             Payment payment = Payment.builder()
                     .totalAmount(totalAmount)
                     .transactionId(paymentDTO.getTransactionId())
@@ -89,7 +88,6 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public List<HistoryProjection> getHistory(String userName) {
         List<HistoryProjection> historyDtos = paymentRepository.getPaymentHistory(userName);
-
         return historyDtos;
     }
 }

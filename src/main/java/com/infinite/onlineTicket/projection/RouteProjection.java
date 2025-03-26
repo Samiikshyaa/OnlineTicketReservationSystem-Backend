@@ -6,8 +6,12 @@ package com.infinite.onlineTicket.projection;
  **/
 public interface RouteProjection {
     Long getBusId();
+
     String getBusNumber();
+
     Integer getCapacity();
+
     Double getPrice();
+
     Double getDistance();
 }

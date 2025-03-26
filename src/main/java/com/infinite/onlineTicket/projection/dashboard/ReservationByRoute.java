@@ -6,5 +6,6 @@ package com.infinite.onlineTicket.projection.dashboard;
  **/
 public interface ReservationByRoute {
     Integer getReservationCount();
+
     String getRouteName();
 }

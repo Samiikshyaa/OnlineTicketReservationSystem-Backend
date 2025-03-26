@@ -1,6 +1,5 @@
 package com.infinite.onlineTicket.dto;
 
-import com.infinite.onlineTicket.model.enums.PaymentMethod;
 import lombok.*;
 
 @Data

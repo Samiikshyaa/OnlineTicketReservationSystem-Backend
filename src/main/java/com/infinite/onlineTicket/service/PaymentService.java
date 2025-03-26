@@ -10,7 +10,10 @@ import java.util.List;
 
 public interface PaymentService {
     PaymentResponseDto makePayment(PaymentDto paymentDTO);
+
     TicketProjection getTotalAmounts(Long reservationId);
+
     TicketDto getTicket(Long paymentId);
+
     List<HistoryProjection> getHistory(String userName);
 }

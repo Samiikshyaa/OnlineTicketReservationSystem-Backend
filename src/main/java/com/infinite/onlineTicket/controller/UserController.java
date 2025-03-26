@@ -3,7 +3,7 @@ package com.infinite.onlineTicket.controller;
 import com.infinite.onlineTicket.dto.GlobalApiResponse;
 import com.infinite.onlineTicket.dto.UserDto;
 import com.infinite.onlineTicket.model.enums.Role;
-import com.infinite.onlineTicket.service.user.UserService;
+import com.infinite.onlineTicket.service.UserService;
 import com.infinite.onlineTicket.model.User;
 import com.infinite.onlineTicket.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,24 +39,21 @@ public class UserController extends BaseController {
         User newUser = new User();
         newUser.setUserName(user.getUserName());
         newUser.setPassword(user.getPassword());
-        newUser.setRole(user.getRole().equalsIgnoreCase("admin")? Role.ADMIN:Role.PASSENGER);
+        newUser.setRole(user.getRole().equalsIgnoreCase("admin") ? Role.ADMIN : Role.PASSENGER);
         userService.saveUser(newUser);
-        return new ResponseEntity<>(successResponse("User registered successfully",newUser.getUserName()),HttpStatus.OK);
+        return new ResponseEntity<>(successResponse("User registered successfully", newUser.getUserName()), HttpStatus.OK);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody User user){
+    public ResponseEntity<String> login(@RequestBody User user) {
         try {
-            authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(user.getUserName(), user.getPassword()));
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUserName(), user.getPassword()));
             UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUserName());
-            String role = userDetails.getAuthorities().stream()
-                    .map(GrantedAuthority::getAuthority)  // Get the role from the authorities
-                    .findFirst()
-                    .orElse("PASSENGER");
-            String jwt =  jwtUtil.generateToken(userDetails.getUsername(), role);
+            String role = userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority)  // Get the role from the authorities
+                    .findFirst().orElse("PASSENGER");
+            String jwt = jwtUtil.generateToken(userDetails.getUsername(), role);
             return new ResponseEntity<>(jwt, HttpStatus.OK);
-        } catch(Exception e) {
+        } catch (Exception e) {
             return new ResponseEntity<>("Incorrect username and password", HttpStatus.BAD_REQUEST);
         }
     }

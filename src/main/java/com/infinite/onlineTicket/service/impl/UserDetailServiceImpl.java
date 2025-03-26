@@ -1,4 +1,4 @@
-package com.infinite.onlineTicket.service.user;
+package com.infinite.onlineTicket.service.impl;
 
 import com.infinite.onlineTicket.model.User;
 import com.infinite.onlineTicket.repository.UserRepository;

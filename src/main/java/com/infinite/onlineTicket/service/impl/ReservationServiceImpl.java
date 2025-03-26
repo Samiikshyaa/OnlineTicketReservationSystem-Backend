@@ -64,8 +64,9 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public List<ReservationByRoute> getReservationByRoute() {
+        //weekly reservations
         LocalDate today = LocalDate.now();
-        LocalDate oneWeekAgo = today.minusDays(7); // Get the date 7 days ago
+        LocalDate oneWeekAgo = today.minusDays(7);
 
         return reservationRepository.getReservationByRoute(oneWeekAgo.atStartOfDay(), today.atTime(23, 59, 59));
     }

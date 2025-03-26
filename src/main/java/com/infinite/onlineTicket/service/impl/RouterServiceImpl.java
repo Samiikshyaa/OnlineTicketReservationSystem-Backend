@@ -30,10 +30,9 @@ public class RouterServiceImpl implements RouteService {
         if (routeDto.getId() != null) {
             route = routeRepository.findById(routeDto.getId()).orElseThrow(() -> new EntityNotFoundException("Route with ID " + routeDto.getId() + " not found"));
         } else {
-            route = new Route(); // Create new entity if ID is null (new route)
+            route = new Route();
         }
 
-        // Update fields
         route.setSource(routeDto.getSource());
         route.setDestination(routeDto.getDestination());
         route.setDepartureDate(LocalDate.parse(routeDto.getDepartureDate()));

@@ -4,6 +4,8 @@ import com.infinite.onlineTicket.model.enums.SeatStatus;
 
 public interface SeatProjection {
     Long getId();
+
     String getSeatNumber();
+
     SeatStatus getSeatStatus();
 }
