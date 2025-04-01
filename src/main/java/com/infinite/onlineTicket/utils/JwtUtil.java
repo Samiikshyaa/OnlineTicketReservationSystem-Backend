@@ -11,7 +11,7 @@ import java.util.*;
 @Component
 public class JwtUtil {
     private String SECRET_KEY = "7dc60cc463f14ea8921dc8c49202f6879cd834ee05c283a45f4f2a5a88e9a199";
-    private final Set<String> blacklistedTokens = new HashSet<>();
+//    private final Set<String> blacklistedTokens = new HashSet<>();
 
     public String generateToken(String username, String role) {
         Map<String, Object> claims = new HashMap<>();
@@ -57,14 +57,15 @@ public class JwtUtil {
 //        return !isTokenExpired(token);
 //    }
     public boolean validateToken(String token, String username) {
-        return extractUsername(token).equals(username) && !isTokenExpired(token) && !isTokenBlacklisted(token);
+        return extractUsername(token).equals(username) && !isTokenExpired(token);
+//                && !isTokenBlacklisted(token);
     }
 
-    public boolean isTokenBlacklisted(String token) {
-        return blacklistedTokens.contains(token);
-    }
+//    public boolean isTokenBlacklisted(String token) {
+//        return blacklistedTokens.contains(token);
+//    }
 
-    public void blacklistToken(String token) {
-        blacklistedTokens.add(token);
-    }
+//    public void blacklistToken(String token) {
+//        blacklistedTokens.add(token);
+//    }
 }
